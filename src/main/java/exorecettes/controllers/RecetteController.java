@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import exorecettes.models.Ingredient;
 import exorecettes.models.Recette;
 import exorecettes.services.RecetteService;
 
@@ -70,6 +72,14 @@ public class RecetteController {
 	@ResponseStatus(code = HttpStatus.OK)
 	public void delete(@PathVariable String id) {
 		this.service.delete(id);
+	}
+	
+	//localhost:8080/recettes/un-id-recette/ajouteringredients----->put
+	@PutMapping("/{id}/ajouteringredient")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Recette ajoutVoitureListe(@PathVariable String id, @RequestBody List<Ingredient> ingredients) {
+		Recette recette = this.service.findById(id);
+		return this.service.ajouterIngredientsListe(recette, ingredients);
 	}
 
 }
