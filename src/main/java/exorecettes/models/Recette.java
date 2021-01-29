@@ -1,7 +1,10 @@
 package exorecettes.models;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
@@ -9,18 +12,25 @@ import lombok.Data;
 @Document("recette")
 public class Recette {
 	
+	@Id
+	private String id;
 	private String nom;
-	private double quantité;
-	private String unité;
+	private List<Ingredient> ingredients;
+	private List<Categorie> categorie;
+	private String description;
 	
 	public Recette() {
 	}
+	
 	@Autowired
-	public Recette(String nom, double quantité, String unité) {
+	public Recette(String nom, List<Ingredient> ingredients, List<Categorie> categorie, String description) {
 		this.nom = nom;
-		this.quantité = quantité;
-		this.unité = unité;
+		this.ingredients = ingredients;
+		this.categorie = categorie;
+		this.description = description;
 	}
+
+
 	
 	
 
