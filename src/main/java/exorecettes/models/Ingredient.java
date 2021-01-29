@@ -2,6 +2,7 @@ package exorecettes.models;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
@@ -9,6 +10,8 @@ import lombok.Data;
 @Document("ingredient")
 public class Ingredient {
 	
+	@Id
+	private String id;
 	private String nom;
 	private double quantité;
 	private String unité;
