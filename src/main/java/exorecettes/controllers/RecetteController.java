@@ -90,7 +90,7 @@ public class RecetteController {
 		return this.service.supprimerIngredientsListe(recette, ingredients);
 	}
 
-	// localhost:8080/recettes/un-id-recette/ajouteringredients----->put
+	// localhost:8080/recettes/un-id-recette/ajouterCategories----->put
 	@PutMapping("/{id}/ajouterCategories")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Recette ajoutCategoriesListe(@PathVariable String id, @RequestBody List<Categorie> categories) {
