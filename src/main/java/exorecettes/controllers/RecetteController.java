@@ -18,6 +18,7 @@ import exorecettes.models.Recette;
 import exorecettes.services.RecetteService;
 
 
+
 @RestController
 @RequestMapping("recettes") // localhost:8080/recettes
 public class RecetteController {
@@ -75,11 +76,18 @@ public class RecetteController {
 	}
 	
 	//localhost:8080/recettes/un-id-recette/ajouteringredients----->put
-	@PutMapping("/{id}/ajouteringredient")
+	@PutMapping("/{id}/ajouteringredients")
 	@ResponseStatus(code = HttpStatus.OK)
-	public Recette ajoutVoitureListe(@PathVariable String id, @RequestBody List<Ingredient> ingredients) {
+	public Recette ajoutIngredientsListe(@PathVariable String id, @RequestBody List<Ingredient> ingredients) {
 		Recette recette = this.service.findById(id);
 		return this.service.ajouterIngredientsListe(recette, ingredients);
+	}
+	
+	@DeleteMapping("/{id}/supprimeringredients")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Recette supprimerIngredientsListe(@PathVariable String id, @RequestBody List<Ingredient> ingredients) {
+		Recette recette = this.service.findById(id);
+		return this.service.supprimerIngredientsListe(recette, ingredients);
 	}
 
 }

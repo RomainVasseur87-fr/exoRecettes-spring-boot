@@ -66,7 +66,7 @@ public class RecetteService {
 		return this.repository.save(recette);
 	}
 
-	public Recette supprimerRecetteListe(Recette recette, List<Ingredient> ingredients) {
+	public Recette supprimerIngredientsListe(Recette recette, List<Ingredient> ingredients) {
 		if (recette.getIngredients() == null) {
 			List<Ingredient> listIngredients = new ArrayList<>();
 			recette.setIngredients(listIngredients);
