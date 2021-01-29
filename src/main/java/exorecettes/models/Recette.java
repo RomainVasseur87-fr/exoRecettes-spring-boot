@@ -18,7 +18,7 @@ public class Recette {
 	private String nom;
 	private List<Ingredient> ingredients;
 	@DBRef
-	private List<Categorie> categorie;
+	private List<Categorie> categories;
 	
 	private String description;
 	
@@ -26,10 +26,10 @@ public class Recette {
 	}
 	
 	@Autowired
-	public Recette(String nom, List<Ingredient> ingredients, List<Categorie> categorie, String description) {
+	public Recette(String nom, List<Ingredient> ingredients, List<Categorie> categories, String description) {
 		this.nom = nom;
 		this.ingredients = ingredients;
-		this.categorie = categorie;
+		this.categories = categories;
 		this.description = description;
 	}
 

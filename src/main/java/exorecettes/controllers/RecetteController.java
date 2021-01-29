@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import exorecettes.models.Categorie;
 import exorecettes.models.Ingredient;
 import exorecettes.models.Recette;
+import exorecettes.services.CategorieService;
 import exorecettes.services.RecetteService;
-
-
 
 @RestController
 @RequestMapping("recettes") // localhost:8080/recettes
@@ -25,32 +25,32 @@ public class RecetteController {
 
 	@Autowired
 	private RecetteService service;
+	@Autowired
+	private CategorieService catService;
 
 	@GetMapping() // localhost:8080/recettes---->get
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Recette> findAll() {
 		return this.service.getAll();
 	}
-	
+
 	@GetMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Recette findById(@PathVariable String id) {
 		return this.service.findById(id);
 
 	}
-	
+
 	@GetMapping("/nom/{nom}") // localhost:8080/recettes/nom/un nom de recette--->get
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Recette> findByNom(@PathVariable String nom) {
 		return this.service.findByNom(nom);
 	}
-	
-	@GetMapping("/categorie/{categorie}") // localhost:8080/recettes/categorie/une categorie--->get
+
+	@GetMapping("/categorie/{idCategorie}") // localhost:8080/recettes/categorie/idCategorie--->get
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<Recette> findByCategorie(@PathVariable String categorie) {
-		List<Recette> recettes = this.service.getAll();
-		// to do
-		return this.service.findByCategorie(categorie);
+	public List<Recette> findByCategorie(@PathVariable String idCategorie) {
+		return this.service.findByCategorie(catService.findById(idCategorie));
 	}
 
 	@PostMapping() // localhost:8080/recettes----> post
@@ -74,20 +74,35 @@ public class RecetteController {
 	public void delete(@PathVariable String id) {
 		this.service.delete(id);
 	}
-	
-	//localhost:8080/recettes/un-id-recette/ajouteringredients----->put
+
+	// localhost:8080/recettes/un-id-recette/ajouteringredients----->put
 	@PutMapping("/{id}/ajouteringredients")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Recette ajoutIngredientsListe(@PathVariable String id, @RequestBody List<Ingredient> ingredients) {
 		Recette recette = this.service.findById(id);
 		return this.service.ajouterIngredientsListe(recette, ingredients);
 	}
-	
+
 	@DeleteMapping("/{id}/supprimeringredients")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Recette supprimerIngredientsListe(@PathVariable String id, @RequestBody List<Ingredient> ingredients) {
 		Recette recette = this.service.findById(id);
 		return this.service.supprimerIngredientsListe(recette, ingredients);
+	}
+
+	// localhost:8080/recettes/un-id-recette/ajouteringredients----->put
+	@PutMapping("/{id}/ajouterCategories")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Recette ajoutCategoriesListe(@PathVariable String id, @RequestBody List<Categorie> categories) {
+		Recette recette = this.service.findById(id);
+		return this.service.ajouterCategoriesListe(recette, categories);
+	}
+
+	@DeleteMapping("/{id}/supprimerCategories")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Recette supprimerCategoriesListe(@PathVariable String id, @RequestBody List<Categorie> categories) {
+		Recette recette = this.service.findById(id);
+		return this.service.supprimerCategoriesListe(recette, categories);
 	}
 
 }

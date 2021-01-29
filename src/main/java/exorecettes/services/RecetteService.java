@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.server.ResponseStatusException;
+
+import exorecettes.models.Categorie;
 import exorecettes.models.Ingredient;
 import exorecettes.models.Recette;
 import exorecettes.repositories.RecetteRepository;
@@ -31,13 +33,12 @@ public class RecetteService {
 						() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	public List<Recette> findByNom(@PathVariable String nom) {
+	public List<Recette> findByNom(String nom) {
 		return this.repository.findByNomAllIgnoreCase(nom);
 	}
 
-	public List<Recette> findByCategorie(@PathVariable String categorie) {
-		// to do
-		return this.repository.findByCategorieAllIgnoreCase(categorie);
+	public List<Recette> findByCategorie(Categorie categorie) {
+		return this.repository.findByCategories(categorie);
 	}
 
 	public Recette create(Recette recette) {
@@ -73,6 +74,29 @@ public class RecetteService {
 		}
 		for (Ingredient ingredient : ingredients) {
 			recette.getIngredients().remove(ingredient);
+		}
+		return this.repository.save(recette);
+	}
+
+	public Recette ajouterCategoriesListe(Recette recette, List<Categorie> categories) {
+		// attention si il n'a pas de liste d'ingredient en creer une
+		if (recette.getCategories() == null) {
+			List<Categorie> listCategories = new ArrayList<>();
+			recette.setCategories(listCategories);
+		}
+		// ajout de la liste d'ingredient
+		recette.getCategories().addAll(categories);
+		// enregistrer la modification de la recette
+		return this.repository.save(recette);
+	}
+
+	public Recette supprimerCategoriesListe(Recette recette, List<Categorie> categories) {
+		if (recette.getCategories() == null) {
+			List<Categorie> listCategories = new ArrayList<>();
+			recette.setCategories(listCategories);
+		}
+		for (Categorie categorie : categories) {
+			recette.getCategories().remove(categorie);
 		}
 		return this.repository.save(recette);
 	}
