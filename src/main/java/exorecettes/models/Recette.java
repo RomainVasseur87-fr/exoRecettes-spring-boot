@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
@@ -16,7 +17,9 @@ public class Recette {
 	private String id;
 	private String nom;
 	private List<Ingredient> ingredients;
+	@DBRef
 	private List<Categorie> categorie;
+	
 	private String description;
 	
 	public Recette() {

@@ -1,7 +1,6 @@
 package exorecettes.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,15 +36,17 @@ public class RecetteController {
 
 	}
 	
-	@GetMapping("/{nom}") // localhost:8080/recettes/un nom de recette--->get
+	@GetMapping("/nom/{nom}") // localhost:8080/recettes/nom/un nom de recette--->get
 	@ResponseStatus(code = HttpStatus.OK)
-	public Recette findByNom(@PathVariable String nom) {
+	public List<Recette> findByNom(@PathVariable String nom) {
 		return this.service.findByNom(nom);
 	}
 	
-	@GetMapping("/{categorie}") // localhost:8080/recettes/une categorie--->get
+	@GetMapping("/categorie/{categorie}") // localhost:8080/recettes/categorie/une categorie--->get
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Recette> findByCategorie(@PathVariable String categorie) {
+		List<Recette> recettes = this.service.getAll();
+		// to do
 		return this.service.findByCategorie(categorie);
 	}
 
@@ -56,19 +57,19 @@ public class RecetteController {
 
 	}
 
-	@PutMapping("/{nom}") // localhost:8080/recettes/un nom de recette---->put
+	@PutMapping("/{id}") // localhost:8080/recettes/id de recette---->put
 	@ResponseStatus(code = HttpStatus.OK)
-	public Recette update(@PathVariable String nom, @RequestBody Recette recette) {
-		Recette oldrecette = this.service.findByNom(nom);
-		recette.setNom(oldrecette.getNom());
+	public Recette update(@PathVariable String id, @RequestBody Recette recette) {
+		Recette oldrecette = this.service.findById(id);
+		recette.setId(oldrecette.getId());
 		return this.service.update(recette);
 
 	}
 
-	@DeleteMapping("/{nom}") // localhost:8080/recettes/un nom de recette---->delete
+	@DeleteMapping("/{id}") // localhost:8080/recettes/id de recette---->delete
 	@ResponseStatus(code = HttpStatus.OK)
-	public void delete(@PathVariable String nom) {
-		this.service.delete(nom);
+	public void delete(@PathVariable String id) {
+		this.service.delete(id);
 	}
 
 }

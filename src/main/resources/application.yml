@@ -1,0 +1,6 @@
+Spring:
+  data:
+    mongodb:
+      host: "localhost"
+      port: 2000
+      database: "Demo"

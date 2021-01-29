@@ -42,8 +42,8 @@ public class IngredientService {
 		return this.repository.save(ingredient);
 	}
 
-	public void delete(String nom) {
-		this.repository.delete(this.repository.findByNomAllIgnoreCase(nom));
+	public void deleteById(String id) {
+		this.repository.deleteById(id);
 	}
 
 }

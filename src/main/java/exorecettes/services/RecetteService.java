@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
-
 import exorecettes.models.Recette;
 import exorecettes.repositories.RecetteRepository;
 
@@ -31,7 +30,7 @@ public class RecetteService {
 						// qui retourn une execption HTTP
 						() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
-	public Recette findByNom(@PathVariable String nom) {
+	public List<Recette> findByNom(@PathVariable String nom) {
 		return this.repository.findByNomAllIgnoreCase(nom);
 	}
 	public List<Recette> findByCategorie(@PathVariable String categorie) {
@@ -47,8 +46,8 @@ public class RecetteService {
 		return this.repository.save(recette);
 	}
 
-	public void delete(String nom) {
-		this.repository.delete(this.repository.findByNomAllIgnoreCase(nom));
+	public void delete(String id) {
+		this.repository.deleteById(id);
 	}
 
 }

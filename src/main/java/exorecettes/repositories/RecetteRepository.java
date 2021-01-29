@@ -11,7 +11,7 @@ import exorecettes.models.Recette;
 @Repository
 public interface RecetteRepository extends MongoRepository<Recette, String>{
 
-	public Recette findByNomAllIgnoreCase(String nom);
+	public List<Recette> findByNomAllIgnoreCase(String nom);
 
 	public List<Recette> findByCategorieAllIgnoreCase(String categorie);
 

@@ -49,19 +49,19 @@ public class IngredientController {
 
 	}
 
-	@PutMapping("/{nom}") // localhost:8080/ingredients/un nom d'ingredient---->put
+	@PutMapping("/{id}") // localhost:8080/ingredients/un nom d'ingredient---->put
 	@ResponseStatus(code = HttpStatus.OK)
-	public Ingredient update(@PathVariable String nom, @RequestBody Ingredient ingredient) {
-		Ingredient oldIngredient = this.service.findByNom(nom);
-		ingredient.setNom(oldIngredient.getNom());
+	public Ingredient update(@PathVariable String id, @RequestBody Ingredient ingredient) {
+		Ingredient oldIngredient = this.service.findById(id);
+		ingredient.setNom(oldIngredient.getId());
 		return this.service.update(ingredient);
 
 	}
 
-	@DeleteMapping("/{nom}") // localhost:8080/ingredients/un nom de categories---->delete
+	@DeleteMapping("/{id}") // localhost:8080/ingredients/id de categories---->delete
 	@ResponseStatus(code = HttpStatus.OK)
-	public void delete(@PathVariable String nom) {
-		this.service.delete(nom);
+	public void delete(@PathVariable String id) {
+		this.service.deleteById(id);
 	}
 
 }
